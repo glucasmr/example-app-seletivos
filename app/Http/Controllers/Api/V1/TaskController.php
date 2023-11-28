@@ -7,6 +7,7 @@ use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
+use App\Models\TaskList;
 
 class TaskController extends Controller
 {
@@ -23,10 +24,11 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreTaskRequest $request)
-    {
-        $task = Task::create($request->validated());
+    {   
+        $validated_request = $request->validated(); 
+        $validated_request['task_list_id'] = TaskList::first()->id;
+        $task = Task::create($validated_request);
         return TaskResource::make(Task::find($task->id));
-
     }
 
     /**
