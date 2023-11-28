@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\TaskList;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,8 @@ class TaskFactory extends Factory
         return [
             'title' => fake()->word(),
             'description' => fake()->sentence(),
-            'status' => rand(1,5)
+            'task_list_id' => TaskList::factory()
+            
         ];
     }
 }
