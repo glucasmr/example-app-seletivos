@@ -23,7 +23,7 @@ class AdvanceTaskController extends Controller
         try {
             $request['task_list_id'] = TaskList::find($request->task_list_id)->id;
         } catch (\Throwable $th) {
-            return response()->json(['error' => 'The task list reported was not found'], 404);
+            return response()->json(['error' => 'The task list id informed was not found'], 404);
         }
 
         $task->task_list_id = $request->task_list_id;
