@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Controller;
 use App\Models\TaskList;
 use App\Http\Requests\StoreTaskListRequest;
 use App\Http\Requests\UpdateTaskListRequest;
+use App\Http\Resources\TaskListResource;
 
 class TaskListController extends Controller
 {
@@ -13,15 +15,7 @@ class TaskListController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return TaskListResource::collection((TaskList::all()));
     }
 
     /**
@@ -29,7 +23,8 @@ class TaskListController extends Controller
      */
     public function store(StoreTaskListRequest $request)
     {
-        //
+        $taskList = TaskList::create($request->validated());
+        return TaskListResource::make($taskList);
     }
 
     /**
@@ -37,15 +32,7 @@ class TaskListController extends Controller
      */
     public function show(TaskList $taskList)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(TaskList $taskList)
-    {
-        //
+        return TaskListResource::make($taskList);
     }
 
     /**
@@ -53,7 +40,8 @@ class TaskListController extends Controller
      */
     public function update(UpdateTaskListRequest $request, TaskList $taskList)
     {
-        //
+        $taskList->update($request->validated());
+        return TaskListResource::make($taskList);
     }
 
     /**
@@ -61,6 +49,7 @@ class TaskListController extends Controller
      */
     public function destroy(TaskList $taskList)
     {
-        //
+        $taskList->delete();
+        return response()->noContent();
     }
 }
